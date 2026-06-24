@@ -1,90 +1,83 @@
-# Sanda Apps Website Directory (davidsanda.com/apps)
+# 🛡️ Sanda Data Saver & Cleaner
 
-This directory hosts the web presence, help center, download tracker, and download assets for the **Sanda Data Saver** project suite, designed and maintained by Bishop David Sanda.
+<p align="center">
+  <img src="images/icon_main.png" alt="Sanda Apps Logo" width="120" height="120" style="border-radius: 28px;"/>
+</p>
 
----
+<p align="center">
+  <strong>Smart Data. Your Control.</strong><br>
+  <em>Save mobile hotspot data on Android. Clean and optimize your PC on Windows.</em>
+</p>
 
-## 📁 Files to Upload & Target Locations
-Upload the updated files in your workspace to your web server using cPanel File Manager or FTP in the following mapping:
-
-| File / Folder | Upload Destination | Description |
-| :--- | :--- | :--- |
-| **`index.html`** | `/public_html/apps/index.html` | The primary landing page. |
-| **`privacy.html`** | `/public_html/apps/privacy.html` | The privacy policy page. |
-| **`help.html`** | `/public_html/apps/help.html` | The help guide and FAQ page. |
-| **`test_counter.html`** | `/public_html/apps/test_counter.html` | API counter diagnostic page. |
-| **`counter.php`** | `/public_html/apps/counter.php` | The PHP download tracker API. |
-| **`download_counts.json`**| `/public_html/apps/download_counts.json`| Local flat-file counts storage. |
-| **`images/`** (Folder) | `/public_html/apps/images/` | Site favicons, icons, and screenshots. |
-| **`.htaccess`** | Root folder of subdomain `/public_html/apps/` | Configures redirect for `apps.davidsanda.com`. |
-
----
-
-## 🔀 Subdomain Redirect (`apps.davidsanda.com`)
-If you want `apps.davidsanda.com` to redirect seamlessly to `www.davidsanda.com/apps/`:
-
-1. Create a DNS **A record** (or CNAME) in your domain zone editor for the host `apps` pointing to your server's shared IP address.
-2. Place the optimized `.htaccess` file inside the root folder designated for the `apps.davidsanda.com` subdomain on your server.
-3. *Note:* If your server uses **Nginx** instead of Apache, add this block to your Nginx server configuration instead:
-   ```nginx
-   server {
-       server_name apps.davidsanda.com;
-       return 301 https://www.davidsanda.com/apps$request_uri;
-   }
-   ```
-   *(If you don't require the subdomain, `www.davidsanda.com/apps` operates fully without any additional server configurations!)*
+<p align="center">
+  <a href="https://github.com/sandadatasaver/sanda-data-saver/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT"/></a>
+  <a href="https://github.com/sandadatasaver/sanda-data-saver/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.2%20%2F%20v1.0.1-00C9FF.svg" alt="Latest Releases"/></a>
+  <img src="https://img.shields.io/badge/Platform-Android%206.0%2B-00FF88?logo=android&logoColor=white" alt="Android Support"/>
+  <img src="https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-00C9FF?logo=windows&logoColor=white" alt="Windows Support"/>
+  <img src="https://img.shields.io/badge/Status-Stable--Release-00FF88" alt="Status Badge"/>
+</p>
 
 ---
 
-## 📊 Download Counter Configuration
+## 🕊️ Ministry Dedication
+> *"Freely you have received; freely give." — Matthew 10:8*
 
-### Option A: PHP Counter (Easiest & Configured by Default)
-* Upload `counter.php` and `download_counts.json` to the same folder as `index.html` (i.e. `/public_html/apps/`).
-* The JavaScript in `index.html` uses a local relative path (`counter.php`), so tracking will work out-of-the-box.
-* **File Permissions:** Ensure `/public_html/apps/` has write permissions (typically `0755` for directories and `0644` for files). If permission settings restrict folder writing, `counter.php` automatically uses the server's temp directory `/tmp/` as a fallback.
-* **Verification:** Visit `https://www.davidsanda.com/apps/test_counter.html` or navigate directly to `https://www.davidsanda.com/apps/counter.php` to verify JSON counts are active.
+Sanda Data Saver is **100% free of charge**, contains **no advertisements**, **no registrations**, and **no hidden trackers**. It is developed and maintained by **Bishop David Sanda** as a gift to the global community, designed to promote digital stewardship and protect families from excessive internet data bills, to the **Glory of Jesus Christ, our Savior**.
 
-### Option B: Supabase (Alternative for Static/No-PHP Hosting Only)
-If you ever migrate to a static CDN host that does not support PHP execution:
-1. Go to [supabase.com](https://supabase.com) and create a free project.
-2. In the SQL Editor, create a table called `downloads` with two columns: `platform` (text, primary key) and `count` (int, default 0).
-3. Insert starting rows: `platform='android', count=28` and `platform='windows', count=10`.
-4. Enable **Row Level Security (RLS)** and construct a policy allowing anonymous reads and updates.
-5. Fetch your Project API URL and anon keys from Settings → API.
-6. Swap the javascript `loadDownloadCount()` and `trackDownload()` methods in `index.html` with your Supabase JS Client endpoints.
+🌍 **Official Website:** [www.davidsanda.com/apps](https://www.davidsanda.com/apps)
 
 ---
 
-## 💰 Donation Channels
-The dashboard contains predefined hooks to support the continuing ministries:
-* **Paystack Shop:** `https://paystack.shop/pay/f25qa34d6z` (Enables card payments, USSD, and bank transfers).
-* **Direct Bank Transfer:** 
+## 📱 Sanda for Android (v1.0.2)
+The Android module creates a highly optimized, local on-device VPN interface that acts as a secure firewall. It prevents selected background apps from draining cellular data when your hotspot is active.
+
+* **🛡️ Selective VPN Firewall:** Only selected/checked apps are routed to Sanda's local tunnel to be blocked. All other apps (like WhatsApp, Facebook, or Mail) bypass the VPN entirely at full network speed with zero latency and zero battery drain!
+* **🧹 Built-in Phone Cleaner:** Scans and purges system cache folders, developer logs, and safe temporary remnants to free up phone storage.
+* **⏱️ Schedule Timer:** Plan and automate your data-saving hours (e.g. set Sanda to auto-activate during peak working hours).
+* **🚨 Data Usage Alerts:** Receive instant push notifications when you reach 50%, 80%, or 100% of your customizable daily data limit.
+* **📱 Home Screen Widget:** A highly responsive widget that lets you toggle background data protection on or off instantly with a single tap.
+
+---
+
+## 🖥️ Sanda for Windows PC (v1.0.1)
+The Windows module is a windowless background application operating entirely from the Windows System Tray, designed to suppress silent background bandwidth-hogging and keep your PC optimized.
+
+* **🛡️ Bandwidth Protection:** Stops automatic Windows Updates, pauses resource-heavy background syncing daemons, and sets connections as Metered Connections.
+* **🧹 Selective PC Cleaner:** A customizable cleaning dashboard. Tick or untick exactly what safe categories you want to sweep (Temp folders, Prefetch keys, Recent files, Browser cache, or CBS diagnostic logs).
+* **📊 Real-Time Bandwidth Tracker:** Hovering your mouse cursor over Sanda's blue tray icon shows you exactly how much hotspot data Sanda has saved you during your session in real-time!
+* **🕒 Silent Auto-Cleaner:** Toggle Sanda's background scheduler to silently run a secure, automated system clean every 24 hours.
+
+---
+
+## 🔒 Our Privacy Promise
+Your trust and privacy are our highest values. Sanda Apps operates with a **strict offline-first privacy framework**:
+* **Zero Data Collection:** We do not collect, monitor, track, store, or transmit your name, location, browsing histories, contacts, or network payloads.
+* **100% On-Device Execution:** All cleaning operations and network filtering are performed strictly on your own hardware. Sanda has no external databases or analytics SDKs.
+* **Zero Advertising:** We do not partner with ad networks or beacons. Sanda is entirely free from promo bloat.
+
+---
+
+## 🛠️ Build & Compilation Instructions
+Both applications can be compiled from their original source codes included in this repository:
+
+* **Android App (Java):** Import the `android-app/` folder directly into **Android Studio**. Make sure to activate your customized `proguard-rules.pro` to keep your output signed release APK lightweight.
+* **Windows App (Python):** Locate the `pc-app/` folder. Ensure you have PyInstaller installed (`pip install pyinstaller`) and double-click our custom **`compile_pc_app.bat`** file to automatically generate your windowless administrative standalone executable file (`SandaDataSaver.exe`) in one click!
+
+*For detailed, step-by-step developer build instructions, please refer to our **[HANDOVER_NOTES.md](pc-app/HANDOVER_NOTES.md)**.*
+
+---
+
+## 🏦 Support the Ministry
+If Sanda Apps has been a blessing to you, your family, or your ministry, and you would like to support the ongoing development of these free tools:
+
+* **💳 Donate securely via Paystack:** [paystack.shop/pay/f25qa34d6z](https://paystack.shop/pay/f25qa34d6z)
+* **🏦 Direct Bank Transfer:**
   * **Account Name:** DAVID SANDA
   * **Account Number:** `6110409146`
-  * **Bank:** OPAY
+  * **Bank Name:** OPAY
+
+You can also support the ministry by **sharing Sanda Apps** with your friends, church family, and communities! 🙏
 
 ---
 
-## 💬 Feedback Form Setup
-The landing page incorporates **Formsubmit.co** for completely free, database-free support emails!
-* The form action is configured to send entries directly to `sandadatasaver@gmail.com`.
-* **First-Time Activation:** When the first message is submitted, Formsubmit.co will send a verification email to your inbox containing a confirmation link. Click that link once to activate the form.
-* **Customizing Target Email:** If you need to change the destination, search for the `form` element in `index.html` and replace the email parameter:
-  ```html
-  <form action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST">
-  ```
-
----
-
-## ⚠️ Important Binary Asset Mapping
-Please confirm that your compiled Android App and Windows Setup installers are uploaded to the correct folder. 
-
-Depending on your cPanel structure, place them in either:
-* **Option A (Subfolder):** `/public_html/apps/softs/`
-  * Android APK: `https://www.davidsanda.com/apps/softs/sanda_data_saver.apk`
-  * Windows EXE: `https://www.davidsanda.com/apps/softs/SandaDataSaver_Setup_v1.0.exe`
-* **Option B (Root domain):** `/public_html/softs/`
-  * Android APK: `https://www.davidsanda.com/softs/sanda_data_saver.apk`
-  * Windows EXE: `https://www.davidsanda.com/softs/SandaDataSaver_Setup_v1.0.exe`
-
-*(Note: The link attributes in your workspace's `index.html` are configured to point to `/apps/softs/` by default. If you prefer to host them at the root `/softs/`, simple let me know, or search for `apps/softs` in `index.html` and edit them to `softs` using our files editor!)*
+*“Commit your work to the Lord, and your plans will be established.” — Proverbs 16:3* ✝️🙏
