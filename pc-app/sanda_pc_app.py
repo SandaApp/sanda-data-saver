@@ -19,9 +19,9 @@ from PIL import Image, ImageDraw, ImageFont, ImageTk
 # BRANDING
 # ============================================
 APP_BRAND_NAME    = "Sanda Data Saver"
-APP_VERSION       = "1.0.1"
+APP_VERSION       = "1.0.7"
 APP_TAGLINE       = "Smart Data. Your Control."
-APP_AUTHOR        = "Bishop David Sanda"
+APP_AUTHOR        = "Bishop Dr. David Sanda"
 APP_COLOR_PRIMARY = "#00C9FF"
 APP_COLOR_ACCENT  = "#FF6B6B"
 APP_COLOR_SUCCESS = "#00FF88"
@@ -171,9 +171,15 @@ def save_config(config):
 def load_blocked_apps():
     try:
         with open(APPS_FILE, 'r') as f:
-            return json.load(f)
+            data = json.load(f)
+        if not data or len(data)==0:
+            save_blocked_apps(DEFAULT_BLOCKED_APPS)
+            return DEFAULT_BLOCKED_APPS.copy()
+        return data
     except (FileNotFoundError, json.JSONDecodeError):
         save_blocked_apps(DEFAULT_BLOCKED_APPS)
+        return DEFAULT_BLOCKED_APPS.copy()
+    except Exception:
         return DEFAULT_BLOCKED_APPS.copy()
 
 def save_blocked_apps(apps):
@@ -995,7 +1001,7 @@ class PCCleanerWindow:
         self.window = tk.Toplevel()
         self.window.title(
             f"{APP_BRAND_NAME} — PC Cleaner")
-        self.window.geometry("680x700")
+        self.window.geometry("680x580")
         self.window.configure(bg=APP_COLOR_BG)
         self.window.resizable(True, True)
         self._build_ui()
