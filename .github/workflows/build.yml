@@ -47,11 +47,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install pystray pillow pyinstaller
 
-      - name: Build EXE with PyInstaller
+      - name: Build EXE with PyInstaller (Windows)
+        if: runner.os == 'Windows'
         working-directory: pc-app
         run: |
           echo "${{ steps.version.outputs.VERSION }}" > VERSION.txt
           pyinstaller --noconsole --onefile --uac-admin --icon="assets\sanda_icon.ico" --add-data "assets\sanda_logo.png;assets" --add-data "assets\sanda_icon.ico;assets" --add-data "VERSION.txt;." --name=SandaDataSaver sanda_pc_app.py
+
+      - name: Build App Bundle (macOS) - with ICNS icon
+        if: runner.os == 'macOS'
+        working-directory: pc-app
+        run: |
+          echo "${{ steps.version.outputs.VERSION }}" > VERSION.txt
+          pyinstaller --noconsole --onefile --icon="assets/sanda_icon.icns" --add-data "assets/sanda_logo.png:assets" --add-data "assets/sanda_icon.icns:assets" --add-data "VERSION.txt:." --name=SandaDataSaver sanda_pc_app.py
+
+      - name: Build Binary (Linux)
+        if: runner.os == 'Linux'
+        working-directory: pc-app
+        run: |
+          echo "${{ steps.version.outputs.VERSION }}" > VERSION.txt
+          pyinstaller --noconsole --onefile --add-data "assets/sanda_logo.png:assets" --add-data "VERSION.txt:." --name=SandaDataSaver sanda_pc_app.py
 
       - name: Verify EXE
         working-directory: pc-app
