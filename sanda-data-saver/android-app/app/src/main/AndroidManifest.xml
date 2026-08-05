@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"  
+    xmlns:tools="http://schemas.android.com/tools"  
+    package="com.sanda.datasaver">  
+  
+    <!-- ========================================= -->  
+    <!-- PERMISSIONS -->  
+    <!-- ========================================= -->  
+  
+    <!-- Data usage stats (Note: READ_PHONE_STATE has been removed to eliminate scary "Phone" warnings!) -->  
+    <uses-permission  
+        android:name="android.permission.PACKAGE_USAGE_STATS"  
+        tools:ignore="ProtectedPermissions" />  
+  
+    <!-- Network control -->  
+    <uses-permission  
+        android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <uses-permission  
+        android:name="android.permission.ACCESS_WIFI_STATE" />  
+    <uses-permission  
+        android:name="android.permission.CHANGE_NETWORK_STATE" />  
+    <uses-permission  
+        android:name="android.permission.CHANGE_WIFI_STATE" />  
+    <uses-permission  
+        android:name="android.permission.INTERNET" />  
+  
+    <!-- Background service -->  
+    <uses-permission  
+        android:name="android.permission.FOREGROUND_SERVICE" />  
+    <uses-permission  
+        android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />  
+  
+    <!-- Boot auto-start -->  
+    <uses-permission  
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED" />  
+  
+    <!-- Notifications -->  
+    <uses-permission  
+        android:name="android.permission.POST_NOTIFICATIONS" />  
+  
+    <!-- Battery optimization ignore -->  
+    <uses-permission  
+        android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />  
+  
+    <!-- See ALL installed apps (Android 11+) -->  
+    <uses-permission  
+        android:name="android.permission.QUERY_ALL_PACKAGES" />  
+  
+    <!-- VPN Service -->  
+    <uses-permission  
+        android:name="android.permission.BIND_VPN_SERVICE" />  
+  
+    <!-- Phone Cleaner permissions (Note: MANAGE_EXTERNAL_STORAGE has been removed to eliminate scary "Storage" warnings!) -->  
+    <uses-permission  
+        android:name="android.permission.READ_EXTERNAL_STORAGE"/>  
+    <uses-permission  
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"  
+        android:maxSdkVersion="29"/>  
+  
+    <!-- Schedule exact alarms -->  
+    <uses-permission  
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"/>  
+    <uses-permission  
+        android:name="android.permission.USE_EXACT_ALARM"/>  
+    <uses-permission  
+        android:name="android.permission.WAKE_LOCK"/>  
+  
+    <!-- ========================================= -->  
+    <!-- APPLICATION -->  
+    <!-- ========================================= -->  
+    <application  
+        android:name=".SandaApp"  
+        android:allowBackup="true"  
+        android:icon="@mipmap/sanda_launcher"  
+        android:label="@string/app_name"  
+        android:roundIcon="@mipmap/sanda_launcher_round"  
+        android:supportsRtl="true"  
+        android:theme="@style/Theme.SandaDataSaver"  
+        android:hardwareAccelerated="true">  
+  
+        <!-- MainActivity -->  
+        <activity  
+            android:name=".MainActivity"  
+            android:exported="true"  
+            android:screenOrientation="portrait"  
+            android:windowSoftInputMode="adjustResize">  
+            <intent-filter>  
+                <action  
+                    android:name="android.intent.action.MAIN" />  
+                <category  
+                    android:name="android.intent.category.LAUNCHER" />  
+            </intent-filter>  
+        </activity>  
+  
+        <!-- App List Activity -->  
+        <activity  
+            android:name=".AppListActivity"  
+            android:exported="false"  
+            android:label="Manage Blocked Apps"  
+            android:parentActivityName=".MainActivity" />  
+  
+        <!-- Data Usage Activity -->  
+        <activity  
+            android:name=".DataUsageActivity"  
+            android:exported="false"  
+            android:label="Data Usage"  
+            android:parentActivityName=".MainActivity" />  
+  
+        <!-- Settings Activity -->  
+        <activity  
+            android:name=".SettingsActivity"  
+            android:exported="false"  
+            android:label="Settings"  
+            android:parentActivityName=".MainActivity" />  
+  
+        <!-- Phone Cleaner Activity -->  
+        <activity  
+            android:name=".PhoneCleanerActivity"  
+            android:exported="false"  
+            android:label="Phone Cleaner"  
+            android:parentActivityName=".MainActivity"/>  
+  
+        <!-- Schedule Activity -->  
+        <activity  
+            android:name=".ScheduleActivity"  
+            android:exported="false"  
+            android:label="Schedule and Alerts"  
+            android:parentActivityName=".MainActivity"/>  
+  
+        <!-- Home Screen Widget -->  
+        <receiver  
+            android:name=".DataSaverWidget"  
+            android:exported="true"  
+            android:label="Sanda Data Saver">  
+            <intent-filter>  
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>  
+                <action android:name="com.sanda.datasaver.WIDGET_TOGGLE"/>  
+            </intent-filter>  
+            <meta-data  
+                android:name="android.appwidget.provider"  
+                android:resource="@xml/widget_info"/>  
+        </receiver>  
+  
+        <!-- Alert Receiver -->  
+        <receiver  
+            android:name=".SandaAlertReceiver"  
+            android:exported="false">  
+            <intent-filter>  
+                <action android:name="com.sanda.datasaver.SCHEDULE_ON"/>  
+                <action android:name="com.sanda.datasaver.SCHEDULE_OFF"/>  
+                <action android:name="com.sanda.datasaver.USAGE_ALERT"/>  
+            </intent-filter>  
+        </receiver>  
+  
+        <!-- ── Services ─────────────────────── -->  
+  
+        <!-- Background Foreground Service -->  
+        <service  
+            android:name=".DataSaverService"  
+            android:enabled="true"  
+            android:exported="false"  
+            android:foregroundServiceType="dataSync" />  
+  
+        <!-- VPN Service — automatic blocking -->  
+        <service  
+            android:name=".DataSaverVpnService"  
+            android:permission="android.permission.BIND_VPN_SERVICE"  
+            android:exported="false">  
+            <intent-filter>  
+                <action  
+                    android:name="android.net.VpnService" />  
+            </intent-filter>  
+        </service>  
+  
+        <!-- Quick Tile Service -->  
+        <service  
+            android:name=".DataSaverTileService"  
+            android:exported="true"  
+            android:icon="@drawable/ic_shield_on"  
+            android:label="Sanda Data Saver"  
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">  
+            <intent-filter>  
+                <action  
+                    android:name="android.service.quicksettings.action.QS_TILE" />  
+            </intent-filter>  
+        </service>  
+  
+        <!-- ── Receivers ────────────────────── -->  
+  
+        <!-- Boot Receiver — auto start on boot -->  
+        <receiver  
+            android:name=".BootReceiver"  
+            android:enabled="true"  
+            android:exported="true">  
+            <intent-filter android:priority="999">  
+                <action  
+                    android:name="android.intent.action.BOOT_COMPLETED" />  
+                <action  
+                    android:name="android.intent.action.QUICKBOOT_POWERON" />  
+                <action  
+                    android:name="android.intent.action.MY_PACKAGE_REPLACED" />  
+            </intent-filter>  
+        </receiver>  
+  
+    </application>  
+  
+</manifest>

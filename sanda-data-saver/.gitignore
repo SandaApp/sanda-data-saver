@@ -1,0 +1,44 @@
+# =========================================================================
+# Sanda Data Saver — GitHub .gitignore File (Option 1: App Source Only)
+# =========================================================================
+
+# --- Ignore the Private Website Directory ---
+# This ensures your unique website files are never accidentally pushed to GitHub!
+/website/
+index.html
+help.html
+privacy.html
+test_counter.html
+counter.php
+download_counts.json
+.htaccess
+/uploads/
+
+# --- Android / Gradle Ignore Rules ---
+.gradle/
+/local.properties
+/build/
+/app/build/
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+
+# --- Security Sensitive (CRITICAL!) ---
+*.jks
+*.keystore
+
+# --- Python / PyInstaller Ignore Rules ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.spec

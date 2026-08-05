@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ── Sanda Brand Colors ── -->
+    <color name="color_primary">#00C9FF</color>
+    <color name="color_accent">#FF6B6B</color>
+    <color name="color_success">#00FF88</color>
+    <color name="color_warning">#FFB347</color>
+
+    <!-- ── Dark Mode Backgrounds ── -->
+    <color name="bg_primary">#0D1117</color>
+    <color name="bg_secondary">#161B22</color>
+    <color name="bg_card">#161B22</color>
+    <color name="bg_card2">#21262D</color>
+
+    <!-- ── Card States ── -->
+    <color name="card_active">#0D2818</color>
+    <color name="card_inactive">#1A0A0A</color>
+
+    <!-- ── Text ── -->
+    <color name="text_primary">#E6EDF3</color>
+    <color name="text_muted">#8B949E</color>
+    <color name="text_on_primary">#0D1117</color>
+
+    <!-- ── Switch Colors ── -->
+    <color name="switch_on">#00C9FF</color>
+    <color name="switch_off">#8B949E</color>
+
+    <!-- ── Status Bar ── -->
+    <color name="status_bar">#0D1117</color>
+
+    <!-- Material theme required -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+</resources>

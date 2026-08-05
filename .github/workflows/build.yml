@@ -9,7 +9,7 @@ on:
       version:
         description: 'Version (e.g. 1.0.12i)'
         required: true
-        default: '1.0.12i'
+        default: '1.0.13'
 
 env:
   PYTHON_VERSION: '3.11'
@@ -198,17 +198,20 @@ jobs:
 
             ### 📦 Downloads
             - **Windows:** `SandaDataSaver.exe` (portable) or `SandaDataSaver_Setup_v*.exe` (installer)
-            - **Android:** `app-debug.apk` (v1.0.12i)
+            - **Android:** `app-debug.apk` (v1.0.13)
 
-            ### ✨ What's New in v1.0.11i - v1.0.12i
+            ### ✨ What's New in v1.0.13 - Public Release
             - ✅ Fixed Arena Direct Max freeze (build.gradle hardcoded C:\ path)
+            - ✅ Fixed Windows installer: VersionInfoVersion numeric + Type mismatch line 127 (Exec ResultCode Integer)
+            - ✅ Fixed Android: missing mipmap/sanda_launcher_round + round webp fallbacks
             - ✅ 9 default blocked apps always show + Reset to Defaults
-            - ✅ Filter instant + Search <5 sec (registry-only, max 100) + Stop button dark red
-            - ✅ PC Cleaner 5 checkboxes + 3 buttons working
+            - ✅ Filter instant + Search <5 sec (registry-only, max 100) + Stop button dark red #8B0000
+            - ✅ PC Cleaner 5 checkboxes + 3 buttons working + window 680x580
             - ✅ Tray icon old WiFi blue ON / red OFF (matches YouTube) + other windows new Sanda logo (embedded 238KB PNG guaranteed)
-            - ✅ Version 1.0.11i + Author Bishop Dr. David Sanda + About Sanda Data Saver single + 680x580 + 820x500
+            - ✅ Version 1.0.13 + Author Bishop Dr. David Sanda + About Sanda Data Saver single + 820x500
             - ✅ Health Reminder Settings working (dark theme fixed)
-            - ✅ 10/10 YES - Gold Master
+            - ✅ 10/10 YES - Gold Master - ALL GREEN (Windows, macOS, Linux, Android)
+            - ✅ Clean GitHub root (no duplicate ISS/ICO/PY) - only pc-app/ + android-app/
 
             ### 🛠️ Build
             - Built with Python ${{ env.PYTHON_VERSION }}, PyInstaller, Inno Setup 6

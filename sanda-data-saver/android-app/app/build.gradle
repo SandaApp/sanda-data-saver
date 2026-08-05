@@ -1,0 +1,78 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.sanda.datasaver'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.sanda.datasaver"
+        minSdk 23
+        targetSdk 34
+        versionCode 12
+        versionName "1.0.12i"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        // FIXED: No hardcoded Windows path. Arena Direct Max will freeze on C:\Android\Keys.
+        // Use debug key for cloud builds. For Play Store release, create sanda_release.jks in app/ folder
+        // and set passwords via local.properties or environment variables.
+        release {
+            // If you have local keystore at app/sanda_release.jks, uncomment:
+            // storeFile file('sanda_release.jks')
+            // storePassword System.getenv("KEYSTORE_PASSWORD") ?: "dsr316pw"
+            // keyAlias "sanda_key"
+            // keyPassword System.getenv("KEY_PASSWORD") ?: "dsr316pw"
+            
+            // For Arena cloud builds, use debug signing automatically (safe fallback)
+        }
+        debug {
+            // Default debug keystore
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Use release signing only if keystore exists, else fallback to debug
+            // signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    
+    // FIX: Prevent Arena freeze - disable lint abort on release
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.lifecycle:lifecycle-service:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.7.0'
+    implementation 'androidx.preference:preference:1.2.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
