@@ -7,6 +7,7 @@
 
 #define MyAppName "Sanda Data Saver"
 #define MyAppVersion "1.0.12i"
+#define MyAppVersionInfo "1.0.12.0"
 #define MyAppPublisher "Bishop Dr. David Sanda"
 #define MyAppURL "https://www.davidsanda.com/apps"
 #define MyAppExeName "SandaDataSaver.exe"
@@ -35,12 +36,12 @@ SetupIconFile=assets\sanda_icon.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 MinVersion=10.0
 UninstallDisplayName={#MyAppName} v{#MyAppVersion}
-VersionInfoVersion={#MyAppVersion}
+VersionInfoVersion={#MyAppVersionInfo}
 VersionInfoCompany={#MyAppPublisher}
 VersionInfoDescription=Sanda Data Saver - Smart Data. Your Control.
 VersionInfoCopyright=© 2026 Bishop Dr. David Sanda - Free for Jesus
 VersionInfoProductName={#MyAppName}
-VersionInfoProductVersion={#MyAppVersion}
+VersionInfoProductVersion={#MyAppVersionInfo}
 ArchitecturesInstallIn64BitMode=x64compatible
 ChangesAssociations=no
 CloseApplications=force
