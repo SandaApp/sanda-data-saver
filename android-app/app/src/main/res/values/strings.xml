@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sanda Data Saver</string>
+    <string name="app_tagline">Smart Data. Your Control.</string>
+    <string name="app_author">Bishop David Sanda</string>
+    <string name="app_version">1.0.0</string>
+    <string name="app_copyright">© 2026 Bishop David Sanda. All rights reserved.</string>
+
+    <string name="status_on">DATA SAVER: ON</string>
+    <string name="status_off">DATA SAVER: OFF</string>
+    <string name="status_detail_on">🛡️ Your hotspot data is protected</string>
+    <string name="status_detail_off">Tap the switch to protect your data</string>
+
+    <string name="btn_manage_apps">Manage Blocked Apps</string>
+    <string name="btn_data_usage">Data Usage</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_about">About</string>
+
+    <string name="notif_title_on">Sanda Data Saver — ON</string>
+    <string name="notif_title_off">Sanda Data Saver — OFF</string>
+    <string name="notif_text_on">🛡️ Protecting your hotspot data</string>
+    <string name="notif_text_off">Tap to activate data saving</string>
+    <string name="notif_btn_turn_on">Turn ON</string>
+    <string name="notif_btn_turn_off">Turn OFF</string>
+
+    <string name="perm_usage_title">Permission Required</string>
+    <string name="perm_usage_message">
+        Sanda Data Saver needs Usage Access permission
+        to show your data usage per app.\n\n
+        Tap OK to open settings, then find
+        \"Sanda Data Saver\" and enable it.
+    </string>
+
+    <string name="about_message">
+        Sanda Data Saver helps you save mobile hotspot
+        data by blocking background apps and enabling
+        Android Data Saver mode with one tap.\n\n
+        By Bishop David Sanda\n
+        Version 1.0.0\n\n
+        © 2026 Bishop David Sanda
+    </string>
+</resources>
