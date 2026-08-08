@@ -21,9 +21,9 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/sanda_logo"
+            android:src="@drawable/ic_shield_on"
             android:layout_marginEnd="6dp"
-            android:contentDescription="Sanda Logo"/>
+            android:contentDescription="Logo"/>
 
         <TextView
             android:layout_width="0dp"

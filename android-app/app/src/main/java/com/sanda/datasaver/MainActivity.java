@@ -78,8 +78,6 @@ public class MainActivity
         // ─────────────────────────────────  
   
         super.onCreate(savedInstanceState);  
-        // FIX: Show new Sanda logo splash longer (was too fast) - 1.2 sec delay so user sees new logo
-        try { Thread.sleep(2500); } catch (InterruptedException ignored) {}
         setContentView(R.layout.activity_main);  
   
         // Initialize core objects  
@@ -88,23 +86,13 @@ public class MainActivity
         usageHelper = new DataUsageHelper(this);  
         handler     = new Handler(Looper.getMainLooper());  
   
-        bindViews();
-        checkPermissions();
-        setupToggle();
-        updateUI(prefs.isDataSaverOn());
-        loadDataUsage();
-        startBackgroundService();
-
-        // Start Health Reminders (distract excessive gaming/social, focus on scripture/prayer)
-        try {
-            HealthReminderManager hm = new HealthReminderManager(this);
-            if (hm.isEnabled()) {
-                hm.scheduleNext();
-            }
-        } catch (Exception e) {
-            // Ignore health init errors
-        }
-    }
+        bindViews();  
+        checkPermissions();  
+        setupToggle();  
+        updateUI(prefs.isDataSaverOn());  
+        loadDataUsage();  
+        startBackgroundService();  
+    }  
   
     // ─────────────────────────────────────  
     // BIND VIEWS  
@@ -150,20 +138,13 @@ public class MainActivity
                                 this,  
                                 PhoneCleanerActivity.class)));  
   
-        // Schedule and Alerts button
-        findViewById(R.id.btn_schedule)
-                .setOnClickListener(v ->
-                        startActivity(new Intent(
-                                this,
-                                ScheduleActivity.class)));
-
-        // Health Reminders button - NEW
-        findViewById(R.id.btn_health)
-                .setOnClickListener(v ->
-                        startActivity(new Intent(
-                                this,
-                                HealthActivity.class)));
-    }
+        // Schedule and Alerts button  
+        findViewById(R.id.btn_schedule)  
+                .setOnClickListener(v ->  
+                        startActivity(new Intent(  
+                                this,  
+                                ScheduleActivity.class)));  
+    }  
   
     // ─────────────────────────────────────  
     // TOGGLE SETUP  
@@ -405,9 +386,9 @@ public class MainActivity
         container.setOrientation(android.widget.LinearLayout.VERTICAL);  
         container.setGravity(android.view.Gravity.CENTER_HORIZONTAL);  
   
-        // App Icon - New Sanda Logo  
+        // App Icon  
         android.widget.ImageView icon = new android.widget.ImageView(this);  
-        icon.setImageResource(R.drawable.sanda_logo);  
+        icon.setImageResource(R.drawable.ic_shield_on);  
         android.widget.LinearLayout.LayoutParams iconParams = new android.widget.LinearLayout.LayoutParams(160, 160);  
         iconParams.gravity = android.view.Gravity.CENTER;  
         iconParams.bottomMargin = 40;  

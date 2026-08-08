@@ -24,10 +24,10 @@
 
             <ImageView
                 android:id="@+id/iv_logo"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:src="@drawable/sanda_logo"
-                android:contentDescription="Sanda Logo - New"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_shield_on"
+                android:contentDescription="Logo"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -268,20 +268,6 @@
                     app:backgroundTint="@color/bg_secondary"
                     app:cornerRadius="12dp"
                     app:strokeColor="@color/color_primary"
-                    app:strokeWidth="1dp"/>
-
-                <!-- Health Reminders Button - NEW: Focus on scripture/prayer, distract gaming/social -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_health"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="💚  Health Reminders — Focus on Jesus"
-                    android:textColor="#0D1117"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
-                    app:backgroundTint="#00FF88"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#00FF88"
                     app:strokeWidth="1dp"/>
 
                 <!-- Settings Button -->

@@ -3,7 +3,7 @@
     <string name="app_name">Sanda Data Saver</string>
     <string name="app_tagline">Smart Data. Your Control.</string>
     <string name="app_author">Bishop Dr. David Sanda</string>
-    <string name="app_version">1.0.16</string>
+    <string name="app_version">1.0.14</string>
     <string name="app_copyright">© 2026 Bishop David Sanda. All rights reserved.</string>
 
     <string name="status_on">DATA SAVER: ON</string>
@@ -36,7 +36,7 @@
         data by blocking background apps and enabling
         Android Data Saver mode with one tap.\n\n
         By Bishop Dr. David Sanda\n
-        Version 1.0.16\n\n
+        Version 1.0.14\n\n
         © 2026 Bishop Dr. David Sanda
     </string>
 </resources>

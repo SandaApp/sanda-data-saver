@@ -8,10 +8,10 @@ public class Constants {
 
     // ── Branding ─────────────────────────────────
     public static final String APP_NAME      = "Sanda Data Saver";
-    public static final String APP_VERSION   = "1.0.16";
-    public static final String APP_AUTHOR    = "Bishop Dr. David Sanda";
+    public static final String APP_VERSION   = "1.0.2";
+    public static final String APP_AUTHOR    = "Bishop David Sanda";
     public static final String APP_TAGLINE   = "Smart Data. Your Control.";
-    public static final String APP_COPYRIGHT = "© 2026 Bishop Dr. David Sanda - Free for Jesus";
+    public static final String APP_COPYRIGHT = "© 2026 Bishop David Sanda";
 
     // ── Shared Preferences Keys ───────────────────
     public static final String PREFS_NAME          = "SandaDataSaverPrefs";

@@ -28,15 +28,10 @@ public class SandaAlertReceiver
             "com.sanda.datasaver.SCHEDULE_OFF";
     public static final String ACTION_USAGE_ALERT =
             "com.sanda.datasaver.USAGE_ALERT";
-    public static final String ACTION_HEALTH_REMINDER =
-            "com.sanda.datasaver.HEALTH_REMINDER";
-    public static final String ACTION_HEALTH_DONE =
-            "com.sanda.datasaver.HEALTH_REMINDER_DONE";
 
     // ── Notification IDs ──────────────────
     public static final int NOTIF_SCHEDULE = 1001;
     public static final int NOTIF_USAGE    = 1002;
-    public static final int NOTIF_HEALTH   = 2001;
 
     // ── Channel ID ────────────────────────
     public static final String CHANNEL_ID =
@@ -69,14 +64,6 @@ public class SandaAlertReceiver
                                 "percent", 80);
                 handleUsageAlert(
                         context, percent);
-                break;
-
-            case ACTION_HEALTH_REMINDER:
-                handleHealthReminder(context);
-                break;
-
-            case ACTION_HEALTH_DONE:
-                handleHealthDone(context);
                 break;
         }
     }
@@ -175,46 +162,6 @@ public class SandaAlertReceiver
                 message,
                 autoActivate
         );
-    }
-
-    // ─────────────────────────────────────
-    // HANDLE HEALTH REMINDER
-    // ─────────────────────────────────────
-    private void handleHealthReminder(Context context) {
-        HealthReminderManager hm = new HealthReminderManager(context);
-        hm.showHealthNotification();
-    }
-
-    private void handleHealthDone(Context context) {
-        // User tapped "Done - Prayed" - schedule next and send thank you
-        HealthReminderManager hm = new HealthReminderManager(context);
-        // Already scheduled next in showHealthNotification, but ensure
-        hm.scheduleNext();
-
-        // Cancel current health notification
-        android.app.NotificationManager nm = (android.app.NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (nm != null) {
-            nm.cancel(HealthReminderManager.NOTIF_ID_HEALTH);
-            // Cancel all health rotating ids
-            for (int i = 0; i < 20; i++) {
-                nm.cancel(HealthReminderManager.NOTIF_ID_HEALTH + i);
-            }
-        }
-
-        // Optional: show encouragement
-        androidx.core.app.NotificationCompat.Builder builder =
-                new androidx.core.app.NotificationCompat.Builder(context, HealthReminderManager.CHANNEL_ID_HEALTH)
-                        .setSmallIcon(R.drawable.sanda_logo)
-                        .setContentTitle("🙏 God Bless You!")
-                        .setContentText("Thank you for taking time to pray and refocus. Keep it up!")
-                        .setPriority(androidx.core.app.NotificationCompat.PRIORITY_LOW)
-                        .setAutoCancel(true);
-
-        if (nm != null) {
-            nm.notify(2999, builder.build());
-            // Auto cancel after 3 sec
-            new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() -> nm.cancel(2999), 3000);
-        }
     }
 
     // ─────────────────────────────────────

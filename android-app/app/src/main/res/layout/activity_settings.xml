@@ -446,7 +446,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sanda Data Saver v1.0.16\n© 2026 Bishop Dr. David Sanda - Free for Jesus"
+            android:text="Sanda Data Saver v1.0.0\n© 2026 Bishop David Sanda"
             android:textColor="@color/text_muted"
             android:textSize="11sp"
             android:gravity="center"
