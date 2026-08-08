@@ -120,14 +120,21 @@
             android:label="Phone Cleaner"  
             android:parentActivityName=".MainActivity"/>  
   
-        <!-- Schedule Activity -->  
-        <activity  
-            android:name=".ScheduleActivity"  
-            android:exported="false"  
-            android:label="Schedule and Alerts"  
-            android:parentActivityName=".MainActivity"/>  
-  
-        <!-- Home Screen Widget -->  
+        <!-- Schedule Activity -->
+        <activity
+            android:name=".ScheduleActivity"
+            android:exported="false"
+            android:label="Schedule and Alerts"
+            android:parentActivityName=".MainActivity"/>
+
+        <!-- Health Activity - NEW: Distract excessive gaming/social, focus on scripture/prayer/constructive -->
+        <activity
+            android:name=".HealthActivity"
+            android:exported="false"
+            android:label="Health Reminders - Focus on Jesus"
+            android:parentActivityName=".MainActivity"/>
+
+        <!-- Home Screen Widget -->
         <receiver  
             android:name=".DataSaverWidget"  
             android:exported="true"  
@@ -141,16 +148,18 @@
                 android:resource="@xml/widget_info"/>  
         </receiver>  
   
-        <!-- Alert Receiver -->  
-        <receiver  
-            android:name=".SandaAlertReceiver"  
-            android:exported="false">  
-            <intent-filter>  
-                <action android:name="com.sanda.datasaver.SCHEDULE_ON"/>  
-                <action android:name="com.sanda.datasaver.SCHEDULE_OFF"/>  
-                <action android:name="com.sanda.datasaver.USAGE_ALERT"/>  
-            </intent-filter>  
-        </receiver>  
+        <!-- Alert Receiver + Health Reminders -->
+        <receiver
+            android:name=".SandaAlertReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.sanda.datasaver.SCHEDULE_ON"/>
+                <action android:name="com.sanda.datasaver.SCHEDULE_OFF"/>
+                <action android:name="com.sanda.datasaver.USAGE_ALERT"/>
+                <action android:name="com.sanda.datasaver.HEALTH_REMINDER"/>
+                <action android:name="com.sanda.datasaver.HEALTH_REMINDER_DONE"/>
+            </intent-filter>
+        </receiver>
   
         <!-- ── Services ─────────────────────── -->  
   

@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace 'com.sanda.datasaver'
     compileSdk 34
@@ -10,23 +16,24 @@ android {
         applicationId "com.sanda.datasaver"
         minSdk 23
         targetSdk 34
-        versionCode 13
-        versionName "1.0.13"
+        versionCode 16
+        versionName "1.0.16"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
-        // FIXED: No hardcoded Windows path. Arena Direct Max will freeze on C:\Android\Keys.
-        // Use debug key for cloud builds. For Play Store release, create sanda_release.jks in app/ folder
-        // and set passwords via local.properties or environment variables.
         release {
-            // If you have local keystore at app/sanda_release.jks, uncomment:
-            // storeFile file('sanda_release.jks')
-            // storePassword System.getenv("KEYSTORE_PASSWORD") ?: "dsr316pw"
-            // keyAlias "sanda_key"
-            // keyPassword System.getenv("KEY_PASSWORD") ?: "dsr316pw"
-            
-            // For Arena cloud builds, use debug signing automatically (safe fallback)
+            // Safe: reads from keystore.properties if exists, else env vars, else debug fallback
+            // Place sanda_release.jks in app/ folder and create keystore.properties in android-app/ folder
+            def storeFilePath = keystoreProperties['storeFile'] ?: 'sanda_release.jks'
+            def storeFileObj = file(storeFilePath)
+            // Only configure if jks exists, otherwise Android Studio will generate signed bundle manually via wizard
+            if (storeFileObj.exists()) {
+                storeFile storeFileObj
+                storePassword keystoreProperties['storePassword'] ?: System.getenv("KEYSTORE_PASSWORD") ?: "dsr316pw"
+                keyAlias keystoreProperties['keyAlias'] ?: "sanda_key"
+                keyPassword keystoreProperties['keyPassword'] ?: System.getenv("KEY_PASSWORD") ?: "dsr316pw"
+            }
         }
         debug {
             // Default debug keystore
@@ -38,8 +45,12 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // Use release signing only if keystore exists, else fallback to debug
-            // signingConfig signingConfigs.release
+            // For GitHub Actions cloud build without keystore, use debug signing automatically
+            // For local Android Studio with keystore, use release signing
+            // signingConfig is set dynamically: if sanda_release.jks exists, use release, else debug
+            if (file('sanda_release.jks').exists() || file(keystoreProperties['storeFile'] ?: 'sanda_release.jks').exists()) {
+                signingConfig signingConfigs.release
+            }
         }
         debug {
             minifyEnabled false

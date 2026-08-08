@@ -6,8 +6,8 @@
 ; =============================================
 
 #define MyAppName "Sanda Data Saver"
-#define MyAppVersion "1.0.13"
-#define MyAppVersionInfo "1.0.13.0"
+#define MyAppVersion "1.0.16"
+#define MyAppVersionInfo "1.0.16.0"
 #define MyAppPublisher "Bishop Dr. David Sanda"
 #define MyAppURL "https://www.davidsanda.com/apps"
 #define MyAppExeName "SandaDataSaver.exe"
@@ -130,8 +130,8 @@ begin
     Sleep(2000);
   end;
   
-  // Check for upgrade
-  IsUpgrade := DirExists(ExpandConstant('{app}'));
+  // Check for upgrade - Note: {app} not available in InitializeSetup, check commonpf instead
+  IsUpgrade := DirExists(ExpandConstant('{commonpf}\SandaDataSaver'));
 end;
 
 function InitializeUninstall(): Boolean;

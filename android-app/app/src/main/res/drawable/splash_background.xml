@@ -8,10 +8,10 @@
         </shape>
     </item>
 
-    <!-- Centered logo -->
+    <!-- Centered new Sanda logo 60% safe zone -->
     <item>
         <bitmap
-            android:src="@drawable/ic_shield_on"
+            android:src="@drawable/sanda_logo"
             android:gravity="center" />
     </item>
 
