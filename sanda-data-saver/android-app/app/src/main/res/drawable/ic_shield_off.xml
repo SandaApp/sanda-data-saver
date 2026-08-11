@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Shield outline — red when OFF -->
+    <path
+        android:fillColor="#FF6B6B"
+        android:fillAlpha="0.3"
+        android:pathData="M24,4 L8,10 L8,24 C8,33 16,41 24,44
+                          C32,41 40,33 40,24 L40,10 Z" />
+
+    <path
+        android:strokeColor="#FF6B6B"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:pathData="M24,4 L8,10 L8,24 C8,33 16,41 24,44
+                          C32,41 40,33 40,24 L40,10 Z" />
+
+    <!-- X mark inside -->
+    <path
+        android:strokeColor="#FF6B6B"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M18,18 L30,30 M30,18 L18,30" />
+
+</vector>

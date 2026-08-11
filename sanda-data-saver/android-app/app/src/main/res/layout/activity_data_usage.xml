@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary">
+
+    <!-- ── HEADER ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/bg_secondary"
+        android:padding="16dp"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_back"
+            android:padding="6dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="📊  Data Usage"
+            android:textColor="@color/color_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingStart="12dp" />
+
+    </LinearLayout>
+
+    <!-- ── PERIOD TABS ── -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/bg_secondary"
+        app:tabTextColor="@color/text_muted"
+        app:tabSelectedTextColor="@color/color_primary"
+        app:tabIndicatorColor="@color/color_primary"
+        app:tabIndicatorHeight="3dp"
+        app:tabRippleColor="@color/color_primary" />
+
+    <!-- ── TOTALS CARD ── -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/bg_card"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today's Data Usage"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/tv_total_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📱 Mobile:  Calculating..."
+                android:textColor="@color/color_accent"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tv_total_wifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📶 WiFi:      Calculating..."
+                android:textColor="@color/color_primary"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tv_total_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📊 Total:    Calculating..."
+                android:textColor="@color/color_success"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ── PROGRESS BAR ── -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressTint="@color/color_primary" />
+
+    <!-- ── USAGE LIST ── -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_usage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp" />
+
+</LinearLayout>

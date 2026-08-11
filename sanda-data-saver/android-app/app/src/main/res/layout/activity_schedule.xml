@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ── Header ─────────────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/bg_secondary"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@color/color_primary"
+                android:contentDescription="Back"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="⏰ Schedule &amp; Alerts"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_primary"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ══ DATA USAGE ALERTS CARD ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/bg_secondary"
+                app:strokeColor="@color/bg_tertiary"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Title Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="📊 Data Usage Alerts"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"/>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_alerts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Get notified at 50%, 80% and 100% of your daily limit. Auto-activates Data Saver at 100%."
+                        android:textSize="12sp"
+                        android:textColor="@color/text_muted"
+                        android:layout_marginBottom="20dp"/>
+
+                    <!-- Current Usage Display -->
+                    <LinearLayout
+                        android:id="@+id/layout_usage_display"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/bg_tertiary"
+                        android:padding="12dp"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today's Usage:"
+                            android:textSize="11sp"
+                            android:textColor="@color/text_muted"
+                            android:layout_marginBottom="4dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_usage_summary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Calculating..."
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/color_primary"/>
+
+                        <!-- Usage progress bar -->
+                        <ProgressBar
+                            android:id="@+id/usage_alert_progress"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_marginTop="8dp"
+                            android:progress="0"
+                            android:max="100"
+                            android:progressTint="@color/color_primary"
+                            android:progressBackgroundTint="@color/bg_primary"/>
+                    </LinearLayout>
+
+                    <!-- Daily Limit Setting -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daily Data Limit"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <!-- Limit Options Grid -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_limit_500"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="500MB"
+                            android:textSize="11sp"
+                            android:layout_margin="3dp"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="8dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_limit_1gb"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="1 GB"
+                            android:textSize="11sp"
+                            android:layout_margin="3dp"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="8dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_limit_2gb"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="2 GB"
+                            android:textSize="11sp"
+                            android:layout_margin="3dp"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="8dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_limit_5gb"
+                            android:layout_width="0dp"
+                            android:layout_height="36dp"
+                            android:layout_weight="1"
+                            android:text="5 GB"
+                            android:textSize="11sp"
+                            android:layout_margin="3dp"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Custom limit -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Custom limit (MB):"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_muted"/>
+
+                        <android.widget.EditText
+                            android:id="@+id/et_custom_limit"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:inputType="number"
+                            android:hint="e.g. 3000"
+                            android:textSize="13sp"
+                            android:textColor="@color/text_primary"
+                            android:textColorHint="@color/text_muted"
+                            android:background="@color/bg_tertiary"
+                            android:padding="8dp"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Current limit display -->
+                    <TextView
+                        android:id="@+id/tv_current_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current limit: Not set"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_success"
+                        android:layout_marginBottom="4dp"/>
+
+                    <!-- Alert thresholds info -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="📊 50% Alert"
+                            android:textSize="11sp"
+                            android:textColor="@color/color_primary"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="⚠️ 80% Warning"
+                            android:textSize="11sp"
+                            android:textColor="@color/color_warning"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🚨 100% Block"
+                            android:textSize="11sp"
+                            android:textColor="@color/color_accent"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ══ SCHEDULE TIMER CARD ═══════ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/bg_secondary"
+                app:strokeColor="@color/bg_tertiary"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Title Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="⏰ Auto Schedule"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"/>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_schedule"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Automatically turn Data Saver ON and OFF at set times."
+                        android:textSize="12sp"
+                        android:textColor="@color/text_muted"
+                        android:layout_marginBottom="20dp"/>
+
+                    <!-- ON Time Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="🛡️  Turn ON at:"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/color_success"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_on_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="08:00 AM"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="10dp"/>
+                    </LinearLayout>
+
+                    <!-- OFF Time Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="✅  Turn OFF at:"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/color_accent"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_off_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="06:00 PM"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="10dp"/>
+                    </LinearLayout>
+
+                    <!-- Active Days -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Active Days:"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:layout_marginBottom="10dp"/>
+
+                    <!-- Days of Week -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp">
+
+                        <!-- Monday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_mon"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="M"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/color_primary"
+                            app:cornerRadius="20dp"/>
+
+                        <!-- Tuesday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_tue"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="T"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/color_primary"
+                            app:cornerRadius="20dp"/>
+
+                        <!-- Wednesday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_wed"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="W"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/color_primary"
+                            app:cornerRadius="20dp"/>
+
+                        <!-- Thursday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_thu"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="T"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/color_primary"
+                            app:cornerRadius="20dp"/>
+
+                        <!-- Friday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_fri"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="F"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/color_primary"
+                            app:cornerRadius="20dp"/>
+
+                        <!-- Saturday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_sat"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="S"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="20dp"/>
+
+                        <!-- Sunday -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_day_sun"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:text="S"
+                            android:textSize="10sp"
+                            android:textColor="@android:color/white"
+                            android:padding="0dp"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:layout_margin="2dp"
+                            app:backgroundTint="@color/bg_tertiary"
+                            app:cornerRadius="20dp"/>
+                    </LinearLayout>
+
+                    <!-- Schedule Status -->
+                    <TextView
+                        android:id="@+id/tv_schedule_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Schedule is OFF"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_muted"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:background="@color/bg_tertiary"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Save Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_save_schedule"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="💾  Save Schedule"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D1117"
+                        app:backgroundTint="@color/color_primary"
+                        app:cornerRadius="12dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

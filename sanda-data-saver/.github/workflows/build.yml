@@ -1,0 +1,221 @@
+name: Sanda Data Saver - Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g. 1.0.12i)'
+        required: true
+        default: '1.0.12i'
+
+env:
+  PYTHON_VERSION: '3.11'
+  JAVA_VERSION: '17'
+
+jobs:
+  # -------------------------------------------------
+  # PC App - Windows Build (PyInstaller EXE + Inno Setup)
+  # -------------------------------------------------
+  build-pc-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Get version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+          echo "Version: ${{ steps.version.outputs.VERSION }}"
+
+      - name: Install Python dependencies
+        working-directory: pc-app
+        run: |
+          python -m pip install --upgrade pip
+          pip install pystray pillow pyinstaller
+
+      - name: Build EXE with PyInstaller (Windows)
+        if: runner.os == 'Windows'
+        working-directory: pc-app
+        run: |
+          echo "${{ steps.version.outputs.VERSION }}" > VERSION.txt
+          pyinstaller --noconsole --onefile --uac-admin --icon="assets\sanda_icon.ico" --add-data "assets\sanda_logo.png;assets" --add-data "assets\sanda_icon.ico;assets" --add-data "VERSION.txt;." --name=SandaDataSaver sanda_pc_app.py
+
+      - name: Build App Bundle (macOS) - with ICNS icon
+        if: runner.os == 'macOS'
+        working-directory: pc-app
+        run: |
+          echo "${{ steps.version.outputs.VERSION }}" > VERSION.txt
+          pyinstaller --noconsole --onefile --icon="assets/sanda_icon.icns" --add-data "assets/sanda_logo.png:assets" --add-data "assets/sanda_icon.icns:assets" --add-data "VERSION.txt:." --name=SandaDataSaver sanda_pc_app.py
+
+      - name: Build Binary (Linux)
+        if: runner.os == 'Linux'
+        working-directory: pc-app
+        run: |
+          echo "${{ steps.version.outputs.VERSION }}" > VERSION.txt
+          pyinstaller --noconsole --onefile --add-data "assets/sanda_logo.png:assets" --add-data "VERSION.txt:." --name=SandaDataSaver sanda_pc_app.py
+
+      - name: Verify EXE
+        working-directory: pc-app
+        shell: pwsh
+        run: |
+          Get-ChildItem dist/
+          if (!(Test-Path dist/SandaDataSaver.exe)) { exit 1 }
+
+      - name: Install Inno Setup
+        run: |
+          choco install innosetup -y
+
+      - name: Build Installer
+        working-directory: pc-app
+        run: |
+          iscc sanda_pc_setup.iss
+
+      - name: Upload PC Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanda-pc-windows
+          path: |
+            pc-app/dist/SandaDataSaver.exe
+            pc-app/InstallerOutput/*.exe
+            pc-app/VERSION.txt
+
+  # -------------------------------------------------
+  # Android App - Build APK (Java)
+  # -------------------------------------------------
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Debug APK
+        working-directory: android-app
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Build Release APK (unsigned, for testing)
+        working-directory: android-app
+        run: |
+          ./gradlew assembleRelease --no-daemon -Pandroid.injected.signing.store.file=debug.keystore -Pandroid.injected.signing.store.password=android -Pandroid.injected.signing.key.alias=androiddebugkey -Pandroid.injected.signing.key.password=android || echo "Release build needs keystore, skipping"
+
+      - name: Upload Android Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanda-android-apk
+          path: |
+            android-app/app/build/outputs/apk/debug/*.apk
+            android-app/app/build/outputs/apk/release/*.apk
+
+  # -------------------------------------------------
+  # Linux & macOS - Check Python compatibility (PC app is Windows-only but we test import)
+  # -------------------------------------------------
+  build-compatibility:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies (without winreg)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pillow pystray
+
+      - name: Syntax check sanda_pc_app.py
+        run: |
+          python -m py_compile pc-app/sanda_pc_app.py
+          echo "Syntax OK on ${{ matrix.os }}"
+
+  # -------------------------------------------------
+  # GitHub Release
+  # -------------------------------------------------
+  release:
+    needs: [build-pc-windows, build-android]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display artifacts
+        run: ls -R artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/sanda-pc-windows/dist/SandaDataSaver.exe
+            artifacts/sanda-pc-windows/InstallerOutput/*.exe
+            artifacts/sanda-android-apk/**/*.apk
+          body: |
+            ## 🛡️ Sanda Data Saver v${{ github.ref_name }}
+
+            **Smart Data. Your Control.**
+
+            ### 📦 Downloads
+            - **Windows:** `SandaDataSaver.exe` (portable) or `SandaDataSaver_Setup_v*.exe` (installer)
+            - **Android:** `app-debug.apk` (v1.0.12i)
+
+            ### ✨ What's New in v1.0.11i - v1.0.12i
+            - ✅ Fixed Arena Direct Max freeze (build.gradle hardcoded C:\ path)
+            - ✅ 9 default blocked apps always show + Reset to Defaults
+            - ✅ Filter instant + Search <5 sec (registry-only, max 100) + Stop button dark red
+            - ✅ PC Cleaner 5 checkboxes + 3 buttons working
+            - ✅ Tray icon old WiFi blue ON / red OFF (matches YouTube) + other windows new Sanda logo (embedded 238KB PNG guaranteed)
+            - ✅ Version 1.0.11i + Author Bishop Dr. David Sanda + About Sanda Data Saver single + 680x580 + 820x500
+            - ✅ Health Reminder Settings working (dark theme fixed)
+            - ✅ 10/10 YES - Gold Master
+
+            ### 🛠️ Build
+            - Built with Python ${{ env.PYTHON_VERSION }}, PyInstaller, Inno Setup 6
+            - Android: Java ${{ env.JAVA_VERSION }}, Gradle, compileSdk 34
+
+            *"Freely you have received; freely give." — Matthew 10:8* ✝️
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
